@@ -3,15 +3,24 @@ import EmberObject from '@ember/object';
 
 var Band = EmberObject.extend({
 	name: '',
-	slug: computed('name', function () {
+	language: '',
+
+	slug: function () {
 	  return this.get('name').dasherize();
-	})
+	}.property('name'),
+
+	site: function() {
+		return 'http://bands.com/' + this.get('slug') + '.' +
+		this.get('language');
+	}.property('slug', 'language')
 });
+
 var Song = EmberObject.extend({
 	title: '',
 	rating: 0,
 	band: ''
 });
+
 export default Route.extend({
 	model: function () {
 		var blackDog = Song.create({
